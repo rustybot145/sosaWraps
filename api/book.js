@@ -1,0 +1,59 @@
+/* Quote request -> email. Vercel serverless, no dependencies.
+   Needs RESEND_API_KEY and BOOKING_TO in the project's environment variables. */
+
+const TO = process.env.BOOKING_TO || "";
+// resend.dev only delivers to the Resend account's own address. Once a domain
+// is verified in Resend, set BOOKING_FROM to
+// "SosaWraps <quotes@yourdomain.com>" and it sends from there.
+const FROM = process.env.BOOKING_FROM || "SosaWraps <onboarding@resend.dev>";
+
+const esc = (s) =>
+  String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// Vercel env names are case-sensitive, so RESEND_API_KEY is what to use — but
+// fall back to any resend-ish name holding a real key rather than fail silently.
+const apiKey = () =>
+  process.env.RESEND_API_KEY ||
+  Object.entries(process.env).find(([k, v]) => /resend/i.test(k) && /^re_[\w-]{10,}$/.test(v || ""))?.[1];
+
+module.exports = async function handler(req, res) {
+  if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  const key = apiKey();
+  if (!key) return res.status(500).json({ error: "No Resend API key in the environment (set RESEND_API_KEY)." });
+  if (!TO) return res.status(500).json({ error: "No destination address (set BOOKING_TO)." });
+
+  const { name = "", rows = [], email = "", replyTo = "", website = "" } = req.body || {};
+  if (website) return res.status(200).json({ ok: true }); // honeypot: bots fill it, people can't see it
+  if (!Array.isArray(rows) || !rows.length) return res.status(400).json({ error: "Nothing to send." });
+
+  // the form sends the customer's address as `email`; accept `replyTo` too
+  const back = replyTo || email;
+
+  const table = rows
+    .slice(0, 40)
+    .map(
+      ([k, v]) =>
+        `<tr><td style="padding:8px 16px 8px 0;color:#888;font:600 11px/1.4 system-ui;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;vertical-align:top">${esc(
+          k
+        ).slice(0, 60)}</td><td style="padding:8px 0;font:15px/1.5 system-ui;color:#111">${esc(v).slice(0, 800)}</td></tr>`
+    )
+    .join("");
+
+  const sent = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
+    body: JSON.stringify({
+      from: FROM,
+      to: TO,
+      subject: `Quote request — ${String(name).slice(0, 60) || "no name given"}`,
+      ...(/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(back) ? { reply_to: back } : {}),
+      html: `<div style="max-width:640px"><h2 style="font:600 18px system-ui;color:#111">New quote request</h2><table cellpadding="0" cellspacing="0">${table}</table></div>`,
+    }),
+  });
+
+  if (!sent.ok) {
+    console.error("resend", sent.status, await sent.text());
+    return res.status(502).json({ error: "Mail service rejected it." });
+  }
+  return res.status(200).json({ ok: true });
+};

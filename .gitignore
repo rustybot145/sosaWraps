@@ -1,0 +1,11 @@
+# Raw phone footage dropped in by hand — ~46MB of MOV/MP4. The derived files in
+# images/ and video/ are what actually ship, and those are in the repo.
+_originals/
+
+# Secrets never belong in here — the Resend key lives in Vercel's env vars.
+.env
+.env.*
+.vercel/
+
+.DS_Store
+node_modules/

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get a quote — SosaWraps</title>
+<meta name="description" content="Tell us the car and what you want wrapped, tinted or blacked out. One number back, usually the same day.">
+<meta name="theme-color" content="#08080a">
+<meta name="robots" content="noindex">
+<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Karla:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- red nebula, churning. No lines anywhere. -->
+<div class="neb" aria-hidden="true">
+  <span class="neb__c neb__c--1"><i></i></span>
+  <span class="neb__c neb__c--2"><i></i></span>
+  <span class="neb__c neb__c--3"><i></i></span>
+  <span class="neb__c neb__c--4"><i></i></span>
+  <span class="neb__c neb__c--6"><i></i></span>
+  <span class="neb__c neb__c--5"><i></i></span>
+  <span class="neb__dust" id="dust"></span>
+</div>
+
+<header class="nav" id="nav" data-stuck="true">
+  <a class="brand" href="index.html" aria-label="SosaWraps, home">
+    <img src="images/logo.png" srcset="images/logo.png 1x, images/logo@2x.png 2x" alt="SosaWraps" width="127" height="88">
+  </a>
+  <a class="btn btn--sm btn--ghost" href="index.html" style="margin-left:auto">Back to site</a>
+</header>
+
+<main class="book">
+
+  <div class="bookhead">
+    <a class="back" href="index.html">&larr; SosaWraps</a>
+    <h1>Get a quote</h1>
+    <p>Tell us the car and what you want done. Panel count, size and finish are what move the number &mdash; everything below helps get it right the first time.</p>
+  </div>
+
+  <form class="form" id="quote" novalidate>
+
+    <div class="row row--2">
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" autocomplete="name" placeholder="Jordan" required>
+      </div>
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="540 555 0134">
+      </div>
+    </div>
+
+    <div class="row row--2">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com">
+      </div>
+      <div class="field">
+        <label for="ig">Instagram</label>
+        <input id="ig" name="ig" type="text" placeholder="@yourhandle">
+        <small>One of the three is enough &mdash; whichever you actually check.</small>
+      </div>
+    </div>
+
+    <fieldset class="fieldset">
+      <legend>What are we doing?</legend>
+      <div class="picks">
+        <label class="pick"><input type="checkbox" name="service" value="Full vinyl wrap"> Full vinyl wrap</label>
+        <label class="pick"><input type="checkbox" name="service" value="Partial wrap (hood / roof / panels)"> Partial wrap</label>
+        <label class="pick"><input type="checkbox" name="service" value="Chrome delete"> Chrome delete</label>
+        <label class="pick"><input type="checkbox" name="service" value="Window tint"> Window tint</label>
+        <label class="pick"><input type="checkbox" name="service" value="Headlight / taillight tint"> Headlight &amp; taillight tint</label>
+        <label class="pick"><input type="checkbox" name="service" value="Not sure — needs a look"> Not sure yet</label>
+      </div>
+    </fieldset>
+
+    <div class="row row--3">
+      <div class="field">
+        <label for="year">Year</label>
+        <input id="year" name="year" type="text" inputmode="numeric" placeholder="2019">
+      </div>
+      <div class="field">
+        <label for="make">Make</label>
+        <input id="make" name="make" type="text" placeholder="Toyota">
+      </div>
+      <div class="field">
+        <label for="model">Model</label>
+        <input id="model" name="model" type="text" placeholder="Camry">
+      </div>
+    </div>
+
+    <div class="row row--2">
+      <div class="field">
+        <label for="finish">Finish</label>
+        <select id="finish" name="finish">
+          <option value="">Not sure yet</option>
+          <option>Gloss</option>
+          <option>Satin</option>
+          <option>Matte</option>
+          <option>Metallic or pearl</option>
+          <option>Textured (carbon, brushed, glitter)</option>
+          <option>Chrome delete — gloss black</option>
+          <option>Chrome delete — satin black</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="color">Color in mind</label>
+        <input id="color" name="color" type="text" placeholder="Velvet Gloss Red, Nardo Grey…">
+        <small>A screenshot of a color you've seen works too &mdash; send it in the DM after.</small>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="when">When would you want it in?</label>
+      <input id="when" name="when" type="text" placeholder="Any weekend in October">
+    </div>
+
+    <div class="field">
+      <label for="notes">Anything else</label>
+      <textarea id="notes" name="notes" placeholder="Repainted panels, existing wrap coming off, dents, a deadline — anything that changes the job."></textarea>
+    </div>
+
+    <div class="hp" aria-hidden="true">
+      <label for="website">Leave this empty</label>
+      <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+
+    <div class="send">
+      <button class="btn" id="send" type="submit">Send it</button>
+      <p class="status" id="status" data-err="false" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+
+  <div class="done" id="done" hidden>
+    <h2>That&rsquo;s in</h2>
+    <p>We&rsquo;ll come back with a number, usually the same day. If it&rsquo;s quicker to talk it through, the DMs are open.</p>
+    <a class="btn" href="https://ig.me/m/sosawraps" target="_blank" rel="noopener">Message @sosawraps</a>
+    <p class="closer__alt"><a href="index.html">Back to the site</a></p>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <p class="foot__fine">&copy; <span id="yr">2026</span> SosaWraps &mdash; Harrisonburg, Virginia.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
