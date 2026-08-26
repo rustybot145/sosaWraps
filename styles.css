@@ -220,7 +220,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav {
   position: fixed; inset: 0 0 auto; z-index: 50;
   display: flex; align-items: center; gap: var(--s3);
-  padding: .85rem var(--edge);
+  padding: .7rem var(--edge);
   border-bottom: 1px solid transparent;
   transition: background .3s var(--ease), border-color .3s var(--ease);
 }
@@ -231,8 +231,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   border-bottom-color: var(--line);
 }
 .brand { display: block; line-height: 0; flex: none; }
-.brand img { width: auto; height: 46px; }
-@media (max-width: 520px) { .brand img { height: 38px; } }
+.brand img { width: auto; height: 68px; }
+@media (max-width: 520px) { .brand img { height: 54px; } }
 .nav__links { display: none; margin-inline: auto; gap: var(--s4); }
 .nav__links a {
   position: relative; text-decoration: none; color: var(--dim);
@@ -301,7 +301,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 
 /* ── section shell ──────────────────────────────────────── */
-.sec { padding: clamp(4.25rem, 11vh, 7rem) var(--edge); scroll-margin-top: 4.5rem; }
+.sec { padding: clamp(4.25rem, 11vh, 7rem) var(--edge); scroll-margin-top: 6.5rem; }
 #top { scroll-margin-top: 0; }
 /* the divider is a light line across the panel, not a box border */
 .sec + .sec, .closer {
@@ -374,7 +374,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .workwrap { display: grid; gap: var(--s4); }
 @media (min-width: 980px) {
   .workwrap { grid-template-columns: minmax(240px, 32%) 1fr; gap: var(--s6); }
-  .workwrap .head { margin-bottom: 0; position: sticky; top: 6rem; align-self: start; }
+  .workwrap .head { margin-bottom: 0; position: sticky; top: 7rem; align-self: start; }
 }
 /* two 9:16 frames to a row — sized for phone-shot clips */
 .work { display: grid; gap: var(--s3); grid-template-columns: repeat(2, 1fr); max-width: 620px; }
@@ -423,7 +423,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .faqwrap { display: grid; gap: var(--s4); }
 @media (min-width: 980px) {
   .faqwrap { grid-template-columns: minmax(240px, 32%) 1fr; gap: var(--s6); }
-  .faqwrap .head { margin-bottom: 0; position: sticky; top: 6rem; align-self: start; }
+  .faqwrap .head { margin-bottom: 0; position: sticky; top: 7rem; align-self: start; }
 }
 .faq { border-top: 1px solid var(--line); }
 .faq details { border-bottom: 1px solid var(--line); }
@@ -462,7 +462,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   max-width: var(--hold); margin-inline: auto;
 }
 .foot__brand { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
-.foot__brand img { height: 24px; width: auto; opacity: .85; }
+.foot__brand img { height: 30px; width: auto; opacity: .85; }
 .foot__where { color: var(--dimmer); font-size: .82rem; }
 .foot__links { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s4); }
 .foot__links a { text-decoration: none; color: var(--dim); font: 500 .84rem/1 var(--display); transition: color .2s var(--ease); }
