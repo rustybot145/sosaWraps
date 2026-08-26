@@ -18,13 +18,19 @@ const apiKey = () =>
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
+  // Misconfiguration is the operator's problem, not the caller's — the detail
+  // goes to the log, the client just gets "it didn't send" and falls back to
+  // the SMS/DM handoff.
   const key = apiKey();
-  if (!key) return res.status(500).json({ error: "No Resend API key in the environment (set RESEND_API_KEY)." });
-  if (!TO) return res.status(500).json({ error: "No destination address (set BOOKING_TO)." });
+  if (!key || !TO) {
+    console.error("book: missing", !key ? "RESEND_API_KEY" : "BOOKING_TO");
+    return res.status(500).json({ error: "Could not send." });
+  }
 
   const { name = "", rows = [], email = "", replyTo = "", website = "" } = req.body || {};
   if (website) return res.status(200).json({ ok: true }); // honeypot: bots fill it, people can't see it
   if (!Array.isArray(rows) || !rows.length) return res.status(400).json({ error: "Nothing to send." });
+  if (rows.length > 40) return res.status(400).json({ error: "Nothing to send." });
 
   // the form sends the customer's address as `email`; accept `replyTo` too
   const back = replyTo || email;

@@ -20,12 +20,14 @@ const run = async (env, body, method = "POST") => {
 };
 
 (async () => {
-  const good = { RESEND_API_KEY: "re_test_key_123456", BOOKING_TO: "shop@example.com" };
+  const good = { RESEND_API_KEY: "NOT-A-REAL-KEY-fixture", BOOKING_TO: "shop@example.com" };
   const rows = [["Name", "Jordan"], ["Wants", "Chrome delete"], ["Vehicle", "2019 Toyota Camry"]];
 
   assert.strictEqual((await run(good, {}, "GET")).code, 405, "GET is rejected");
-  assert.strictEqual((await run({ BOOKING_TO: "a@b.c" }, { rows })).code, 500, "missing key is a 500");
-  assert.strictEqual((await run({ RESEND_API_KEY: "re_x_1234567890" }, { rows })).code, 500, "missing BOOKING_TO is a 500");
+  const noKey = await run({ BOOKING_TO: "a@b.c" }, { rows });
+  assert.strictEqual(noKey.code, 500, "missing key is a 500");
+  assert.strictEqual(noKey.payload.error, "Could not send.", "and says nothing about why");
+  assert.strictEqual((await run({ RESEND_API_KEY: "NOT-A-REAL-KEY-fixture" }, { rows })).code, 500, "missing BOOKING_TO is a 500");
   assert.strictEqual((await run(good, { rows: [] })).code, 400, "empty form is a 400");
 
   const hp = await run(good, { rows, website: "spam" });
